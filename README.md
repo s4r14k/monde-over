@@ -1,3 +1,3 @@
-#Application wordpress avec création theme
+# Application wordpress avec création theme
 ## Theme
 Deadline 1 mois
