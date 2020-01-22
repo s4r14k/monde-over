@@ -28,7 +28,7 @@
     <?php endif; ?>
     <div class="plus-actualite">
         <?php $listes_actualite = get_page_by_title('Listes actualites'); ?>
-        <div class="plus-actualite-text"><a href="<?php echo get_page_link($listes_actualite->ID); ?>"><span>Plus d'actualité</span><i class="fa fa-chevron-right" aria-hidden="true"></i></a></div>
+        <div class="plus-actualite-text"><a href="<?php echo get_page_link($listes_actualite->ID); ?>"><span>Plus d'actualité</span><i class="fa fa-chevron-right" aria-hidden="true" style="vertical-align: middle;"></i></a></div>
     </div>
   </div><!-- /.blog-main -->
 </div><!-- /.row -->

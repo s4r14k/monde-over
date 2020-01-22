@@ -485,7 +485,7 @@ form p {
 
 .plus-actualite {
   text-align: end;
-  margin-bottom: 15px;
+  margin-bottom: 47px;
 }
 
 .plus-actualite-text > a {
@@ -493,6 +493,24 @@ form p {
   color: #fff;
   padding: 7px 27px 7px 147px;
   border-radius: 15px 0px 0px 15px;
+}
+.plus-actualite-text > a > span {
+  margin-right: 12px;
+}
+
+.actualite-detail-post {
+  width: 80%;
+  margin: auto;
+}
+.actualite-detail-post h2 {
+  margin-bottom: 50px;
+}
+
+.parapraphe-droite, .paragraphe-gauche {
+  font-size: 2.5rem;
+}
+.wp-block-columns {
+  margin-bottom: 112px !important;
 }
 /* Bloc offre*/
 .derniere-offre {
@@ -657,7 +675,10 @@ form p {
   margin-top: 15px;
 }
 .envoi-formulaire {
-  background-image: linear-gradient(to right, #ff3e89, #e63a97, #c93ca1, #a840a7, #8344a9);
+  background-image: linear-gradient(to right, #ff3e89, #e63a97, #c93ca1, #a840a7, #8344a9) !important;
+  border: none !important;
+  margin-top: 25px !important;
+  margin-bottom: 50px;
 }
 
 .photo, .cv, .lm {

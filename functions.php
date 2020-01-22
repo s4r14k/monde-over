@@ -1,7 +1,5 @@
 <?php 
 
-@ini_set( 'upload_max_size' , '64M' );
-
 // // Add scripts and stylesheets
 // function startwordpress_scripts() {
 // 	wp_enqueue_style( 'bootstrap', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '3.3.6' );
@@ -29,6 +27,13 @@ function startwordpress_google_fonts() {
 }
 
 add_action('wp_print_styles', 'startwordpress_google_fonts');
+
+// editor
+function editor_support() {
+        // Add support for editor styles.
+          add_theme_support( 'editor-styles' );
+}
+add_action( 'after_setup_theme', 'editor_support' );
 
 // WordPress Titles
 add_theme_support( 'title-tag' );
@@ -82,26 +87,9 @@ add_action( 'admin_init', 'custom_settings_page_setup' );
 // Support Featured Images
 add_theme_support( 'post-thumbnails' );
 
-// Custom Post Type
-function create_my_custom_post() {
-	register_post_type( 'my-custom-post',
-			array(
-			'labels' => array(
-	'name' => __( 'My Custom Post' ),
-	'singular_name' => __( 'My Custom Post' ),
-			),
-			'public' => true,
-			'has_archive' => true,
-			'supports' => array(
-	'title',
-	'editor',
-	'thumbnail',
-	'custom-fields'
-			)
-	));
-}
-add_action( 'init', 'create_my_custom_post' );
+add_theme_support( 'custom-background' );
 
+add_theme_support( 'custom-header' );
 
 // post pour la création Nous rejoindre
 
@@ -132,6 +120,7 @@ function create_post_nous_rejoindre() {
     'page-attributes',
     'post_tag',
     'category',
+    'show_in_rest' => true,
     			)
     		)
     	);
@@ -428,7 +417,7 @@ function special_nav_class ($classes, $item) {
  */
 function wpdocs_excerpt_more( $more ) {
     if ( ! is_single() ) {
-        $more = sprintf( '... <a class="read-more" href="%1$s"><span>%2$s</span> <span><i class="fa fa-chevron-right" aria-hidden="true"></i></span></a>',
+        $more = sprintf( '... <a class="read-more" href="%1$s"><span>%2$s</span> <span><i style="vertical-align:middle;" class="fa fa-chevron-right" aria-hidden="true"></i></span></a>',
             get_permalink( get_the_ID() ),
             __( 'En savoir plus', 'textdomain' )
         );
