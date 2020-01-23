@@ -9,10 +9,38 @@
 
 // add_action( 'wp_enqueue_scripts', 'startwordpress_scripts' );
 
-function my_theme_scripts() {
-    wp_enqueue_script( 'my-great-script', get_template_directory_uri() . '/js/my-great-script.js', array( 'jquery' ), '1.0.0', true );
+function my_login_logo() { ?>
+    <style type="text/css">
+        #login h1 a, .login h1 a {
+            background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/images/logo.png);
+			height:65px;
+			width:320px;
+			background-size: 320px 65px;
+			background-repeat: no-repeat;
+        	padding-bottom: 30px;
+        }
+    </style>
+<?php }
+
+add_action( 'login_enqueue_scripts', 'my_login_logo' );
+
+function my_login_stylesheet() {
+    wp_enqueue_style( 'custom-login', get_stylesheet_directory_uri() . '/css/style.css' );
 }
-// add_action( 'wp_enqueue_scripts', 'my_theme_scripts' );
+
+add_action( 'login_enqueue_scripts', 'my_login_stylesheet' );
+
+add_action( 'admin_enqueue_scripts', 'load_custom_script' );
+
+add_action('admin_enqueue_scripts', 'my_enqueue');
+
+function load_custom_script() {
+    wp_enqueue_script('custom_js_script', 'https://code.jquery.com/jquery-3.4.1.min.js', array('jquery'));
+}
+
+function my_enqueue() {
+    wp_enqueue_script('my_custom_script', get_stylesheet_directory_uri() . '/js/video.js');
+}
 
 function load_fa() {
 	wp_enqueue_style('load-fa', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
@@ -44,6 +72,12 @@ function custom_settings_add_menu() {
 }
 add_action( 'admin_menu', 'custom_settings_add_menu' );
 
+function liste_video_add_menu() {
+	add_menu_page('Listes Video', 'Listes Video', 'manage_options', 'other-settings', 'liste_video_page', null, 99 );
+}
+
+add_action( 'admin_menu', 'liste_video_add_menu' );
+
 // Create Custom Global Settings
 function custom_settings_page() { ?>
 	<div class="wrap">
@@ -54,6 +88,20 @@ function custom_settings_page() { ?>
 						do_settings_sections( 'theme-options' );
 						submit_button();
 				?>
+		</form>
+	</div>
+<?php }
+
+function liste_video_page() { ?>
+	<div class="wrap">
+		<h1>Listes Vidéo</h1>
+		<form id="form_video" method="post" onsubmit="submitVideo()">
+				<?php
+						settings_fields( 'video' );
+						do_settings_sections( 'video-options' );
+						
+				?>
+			<button type="submit" class="button button-primary" id="submit_video">Enregister les modifications</button>
 		</form>
 	</div>
 <?php }
@@ -71,6 +119,37 @@ function setting_facebook() { ?>
 	<input type="text" name="facebook" id="facebook" value="<?php echo get_option('facebook'); ?>" />
 <?php }
 
+
+// Listes vidéo
+function setting_video_anna() { ?>
+	<input type="file" name="anna" id="anna" value="<?php echo get_option( 'anna' ); ?>" />
+<?php }
+
+function setting_video_allen() { ?>
+	<input type="file" name="allen" id="allen" value="<?php echo get_option('allen'); ?>" />
+<?php }
+
+function setting_video_michel() { ?>
+	<input type="file" name="michel" id="michel" value="<?php echo get_option('michel'); ?>" />
+<?php }
+
+function setting_video_sylvie() { ?>
+	<input type="file" name="sylvie" id="sylvie" value="<?php echo get_option('sylvie'); ?>" />
+<?php }
+
+function setting_video_seheno() { ?>
+	<input type="file" name="seheno" id="seheno" value="<?php echo get_option('seheno'); ?>" />
+<?php }
+
+function setting_video_mahefa() { ?>
+	<input type="file" name="mahefa" id="mahefa" value="<?php echo get_option('mahefa'); ?>" />
+<?php }
+
+function setting_video_patricia() { ?>
+	<input type="file" name="patricia" id="patricia" value="<?php echo get_option('patricia'); ?>" />
+<?php }
+
+
 function custom_settings_page_setup() {
 	add_settings_section( 'section', 'All Settings', null, 'theme-options' );
 	add_settings_field( 'twitter', 'Twitter URL', 'setting_twitter', 'theme-options', 'section' );
@@ -83,6 +162,28 @@ function custom_settings_page_setup() {
 }
 
 add_action( 'admin_init', 'custom_settings_page_setup' );
+
+
+function custom_settings_page_video() {
+	add_settings_section( 'video', 'Tous les videos', null, 'video-options' );
+	add_settings_field( 'anna', 'Anna video URL', 'setting_video_anna', 'video-options', 'video' );
+	add_settings_field( 'allen', 'Allen video URL', 'setting_video_allen', 'video-options', 'video' );
+	add_settings_field( 'michel', 'Michel video URL', 'setting_video_michel', 'video-options', 'video' );
+	add_settings_field( 'sylvie', 'Sylvie video URL', 'setting_video_sylvie', 'video-options', 'video' );
+	add_settings_field( 'seheno', 'Seheno video URL', 'setting_video_seheno', 'video-options', 'video' );
+	add_settings_field( 'mahefa', 'Mahefa video URL', 'setting_video_mahefa', 'video-options', 'video' );
+	add_settings_field( 'patricia', 'Patricia video URL', 'setting_video_patricia', 'video-options', 'video' );
+
+	register_setting('video', 'anna');
+	register_setting( 'video', 'allen' );
+	register_setting( 'video', 'michel' );
+	register_setting('video', 'sylvie');
+	register_setting( 'video', 'seheno' );
+	register_setting( 'video', 'mahefa' );
+	register_setting( 'video', 'patricia' );
+}
+
+add_action( 'admin_init', 'custom_settings_page_video' );
 
 // Support Featured Images
 add_theme_support( 'post-thumbnails' );
@@ -219,7 +320,7 @@ function shortocode_derniere_offre ($atts = array(), $content = null) {
 	// var_dump($your_loop);
     
     if ( $your_loop->have_posts() ) :
-    ?> <div class="derniere-offre-contain"> <div class="h2 derniere-offre-titre">Derniers jobs</div><?php
+    ?> <div class="derniere-offre-contain"> <div class="h2 derniere-offre-titre">Dernières jobs</div><?php
     while ( $your_loop->have_posts() ) : $your_loop->the_post();
     	$meta = get_post_meta( get_the_ID(), 'offres', true ); 
     	// var_dump($meta);

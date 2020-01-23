@@ -497,7 +497,9 @@ form p {
 .plus-actualite-text > a > span {
   margin-right: 12px;
 }
-
+.actualite-detail {
+  position: relative;
+}
 .actualite-detail-post {
   width: 80%;
   margin: auto;
@@ -697,6 +699,38 @@ form p {
 .close-menu {
   display: none;
 }
+
+.backing {
+  width: 80%;
+  margin: auto;
+  margin-bottom: 35px;
+}
+
+.backing-offre {
+  margin-bottom: 35px;
+}
+
+.backing > span, .backing-offre > span {
+  cursor: pointer;
+  color: #8344a9;
+  text-decoration: underline;
+  font-size: 2rem;
+}
+
+.post-link {
+  width: 80%;
+  position: absolute;
+  left: 11%;
+}
+
+.next-post {
+  text-align: end;
+}
+
+.left-post, .right-post {
+  color: #8344a9;
+}
+
 /* Mobile */
 
 @media (max-width: 500px) {
@@ -812,6 +846,21 @@ form p {
     width: 80%;
     margin: auto;
     text-align: center;
+  }
+
+  .post-link {
+    width: 80%;
+    position: absolute;
+    left: 11%;
+    display: flex;
+  }
+  .next-post {
+    position: absolute;
+    right: -35px;
+  }
+  .previous-post {
+    position: absolute;
+    left: -10px;
   }
 
 }

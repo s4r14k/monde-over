@@ -1,0 +1,37 @@
+body.login {}
+body.login div#login {}
+body.login div#login h1 {}
+body.login div#login h1 a {}
+body.login div#login form#loginform {}
+body.login div#login form#loginform p {}
+body.login div#login form#loginform p label {}
+body.login div#login form#loginform input {}
+body.login div#login form#loginform input#user_login:focus {
+	border-color: #ff3e89;
+	box-shadow: 0 0 0 1px #ff3e89;
+}
+body.login div#login form#loginform input#user_pass:focus {
+	border-color: #ff3e89;
+	box-shadow: 0 0 0 1px #ff3e89;
+}
+body.login div#login form#loginform p.forgetmenot {}
+body.login div#login form#loginform p.forgetmenot input#rememberme {}
+body.login div#login form#loginform p.submit {
+
+}
+body.login div#login form#loginform p.submit input#wp-submit {
+	background-image: linear-gradient(to right, #ff3e89, #e63a97, #c93ca1, #a840a7, #8344a9);
+    border: none;
+    color: #fff;
+}
+body.login div#login p#nav {}
+body.login div#login p#nav a {}
+body.login div#login p#backtoblog {}
+body.login div#login p#backtoblog a {}
+
+.wp-core-ui .button-secondary:focus, .wp-core-ui .button.focus, .wp-core-ui .button:focus {
+	color: #ff3e89;
+}
+.wp-core-ui .button-secondary, .wp-core-ui .button.focus, .wp-core-ui .button {
+	color: #ff3e89;
+}
