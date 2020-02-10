@@ -11,6 +11,9 @@
   <div class="col-sm-12 blog-main">
     <?php 
     // the query
+
+    $postule = get_page_by_title('Postuler');
+
     $wpb_all_query = new WP_Query(array('post_type'=>'nous_rejoindre', 'post_status'=>'publish', 'posts_per_page'=>3)); ?>
      
     <?php if ( $wpb_all_query->have_posts() ) : ?>
@@ -27,7 +30,7 @@
         <div class="h2"><span>Tu ne trouves pas ton <span class="accent-text">bonheur?</span></span></div>
         <div class="candidature-spontannee-p"><p>Pas de panique, nous sommes continuellement à la recherche de nouveaux talents qui partagent 
 nos valeurs !</p></div>
-        <div><a class="postuler-offre-spontanee" href="">candidature spontanée</a></div>
+        <div><a class="postuler-offre-spontanee" href="<?php echo get_page_link($postule->ID) ?>">candidature spontanée</a></div>
     </div>
      
     <?php else : ?>

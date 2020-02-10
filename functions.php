@@ -68,7 +68,7 @@ add_theme_support( 'title-tag' );
 
 // Custom settings
 function custom_settings_add_menu() {
-	add_menu_page( 'Custom Settings', 'Custom Settings', 'manage_options', 'custom-settings', 'custom_settings_page', null, 99 );
+	add_menu_page( 'Réseaux socio', 'Réseaux socio', 'manage_options', 'custom-settings', 'custom_settings_page', null, 99 );
 }
 add_action( 'admin_menu', 'custom_settings_add_menu' );
 
@@ -81,7 +81,7 @@ add_action( 'admin_menu', 'liste_video_add_menu' );
 // Create Custom Global Settings
 function custom_settings_page() { ?>
 	<div class="wrap">
-		<h1>Custom Settings</h1>
+		<h1>Réseaux socio</h1>
 		<form method="post" action="options.php">
 				<?php
 						settings_fields( 'section' );
@@ -149,9 +149,13 @@ function setting_video_patricia() { ?>
 	<input type="file" name="patricia" id="patricia" value="<?php echo get_option('patricia'); ?>" />
 <?php }
 
+function setting_video_colaborateur() { ?>
+	<input type="file" name="colaborateur" id="colaborateur" value="<?php echo get_option('colaborateur'); ?>" />
+<?php }
+
 
 function custom_settings_page_setup() {
-	add_settings_section( 'section', 'All Settings', null, 'theme-options' );
+	add_settings_section( 'section', 'Listes des Réseaux socio', null, 'theme-options' );
 	add_settings_field( 'twitter', 'Twitter URL', 'setting_twitter', 'theme-options', 'section' );
 	add_settings_field( 'github', 'GitHub URL', 'setting_github', 'theme-options', 'section' );
 	add_settings_field( 'facebook', 'Facebook URL', 'setting_facebook', 'theme-options', 'section' );
@@ -173,6 +177,7 @@ function custom_settings_page_video() {
 	add_settings_field( 'seheno', 'Seheno video URL', 'setting_video_seheno', 'video-options', 'video' );
 	add_settings_field( 'mahefa', 'Mahefa video URL', 'setting_video_mahefa', 'video-options', 'video' );
 	add_settings_field( 'patricia', 'Patricia video URL', 'setting_video_patricia', 'video-options', 'video' );
+	add_settings_field( 'colaborateur', 'Patricia video URL', 'setting_video_patricia', 'video-options', 'video' );
 
 	register_setting('video', 'anna');
 	register_setting( 'video', 'allen' );
@@ -181,6 +186,7 @@ function custom_settings_page_video() {
 	register_setting( 'video', 'seheno' );
 	register_setting( 'video', 'mahefa' );
 	register_setting( 'video', 'patricia' );
+	register_setting( 'video', 'colaborateur' );
 }
 
 add_action( 'admin_init', 'custom_settings_page_video' );
@@ -208,20 +214,21 @@ function create_post_nous_rejoindre() {
     			'has_archive'  => true,
     			'supports'     => array(
     'title',
-    'editor',
+    // 'editor',
     'author',
     'permalink',
     'excerpt',
     'custom-fields',
     'page-attributes',
     'post-formats',
+    'has_archive' => true,
+    'show_in_rest' => true,
     'thumbnail',
     			),
     			'taxonomies'   => array(
     'page-attributes',
     'post_tag',
     'category',
-    'show_in_rest' => true,
     			)
     		)
     	);
@@ -254,6 +261,111 @@ function show_your_fields_meta_box() {
     	<br>
     	<input type="text" name="offres[lieux]" id="offres[lieux]" class="regular-text" value="<?php if (is_array($meta) && isset($meta['lieux'])){ echo $meta['lieux']; }  ?>" >
     </p>
+    <p>
+    	<label for="offres[mission]">Mission (Veuillez ajouter un '&#60;br&#62;' à chaque fin de la ligne.) </label>
+    	<br>
+    	<textarea name="offres[mission]" id="offres[mission]" rows="15" cols="200" style="width:100%;"><?php if (is_array($meta) && isset($meta['mission'])){ echo $meta['mission']; } ?></textarea>
+    </p>
+    <p>
+    	<label for="offres[image1]">Premier image</label><br>
+    	<input type="text" name="offres[image1]" id="offres[image1]" class="meta-image regular-text" value="<?php if (is_array($meta) && isset($meta['image1'])){ echo $meta['image1']; } ?>">
+    	<input type="button" class="button image-upload" value="Browse">
+    </p>
+    <div class="image-preview"><img src="<?php echo $meta['image1']; ?>" style="max-width: 250px;"></div>
+    <p>
+    	<label for="offres[profil]">Profil (Veuillez ajouter un '&#60;br&#62;' à chaque fin de la ligne.) </label>
+    	<br>
+    	<textarea name="offres[profil]" id="offres[profil]" rows="15" cols="200" style="width:100%;"><?php if (is_array($meta) && isset($meta['profil'])){ echo $meta['profil']; } ?></textarea>
+    </p>
+    <p>
+    	<label for="offres[image2]">Deuxième image</label><br>
+    	<input type="text" name="offres[image2]" id="offres[image2]" class="meta-image2 regular-text" value="<?php if (is_array($meta) && isset($meta['image2'])){ echo $meta['image2']; } ?>">
+    	<input type="button" class="button image-upload2" value="Browse">
+    </p>
+    <div class="image-preview2"><img src="<?php echo $meta['image2']; ?>" style="max-width: 250px;"></div>
+    <script>
+	  jQuery(document).ready(function($) {
+	    // Instantiates the variable that holds the media library frame.
+	    var meta_image_frame
+	    // Runs when the image button is clicked.
+	    $('.image-upload').click(function(e) {
+	      // Get preview pane
+	      var meta_image_preview = $(this)
+	        .parent()
+	        .parent()
+	        .children('.image-preview')
+	      // Prevents the default action from occuring.
+	      e.preventDefault()
+	      var meta_image = $(this)
+	        .parent()
+	        .children('.meta-image')
+	      // If the frame already exists, re-open it.
+	      if (meta_image_frame) {
+	        meta_image_frame.open()
+	        return
+	      }
+	      // Sets up the media library frame
+	      meta_image_frame = wp.media.frames.meta_image_frame = wp.media({
+	        title: meta_image.title,
+	        button: {
+	          text: meta_image.button,
+	        },
+	      })
+	      // Runs when an image is selected.
+	      meta_image_frame.on('select', function() {
+	        // Grabs the attachment selection and creates a JSON representation of the model.
+	        var media_attachment = meta_image_frame
+	          .state()
+	          .get('selection')
+	          .first()
+	          .toJSON()
+	        // Sends the attachment URL to our custom image input field.
+	        meta_image.val(media_attachment.url)
+	        meta_image_preview.children('img').attr('src', media_attachment.url)
+	      })
+	      // Opens the media library frame.
+	      meta_image_frame.open()
+	    })
+	    $('.image-upload2').click(function(e) {
+	      // Get preview pane
+	      var meta_image_preview = $(this)
+	        .parent()
+	        .parent()
+	        .children('.image-preview2')
+	      // Prevents the default action from occuring.
+	      e.preventDefault()
+	      var meta_image = $(this)
+	        .parent()
+	        .children('.meta-image2')
+	      // If the frame already exists, re-open it.
+	      if (meta_image_frame) {
+	        meta_image_frame.open()
+	        return
+	      }
+	      // Sets up the media library frame
+	      meta_image_frame = wp.media.frames.meta_image_frame = wp.media({
+	        title: meta_image.title,
+	        button: {
+	          text: meta_image.button,
+	        },
+	      })
+	      // Runs when an image is selected.
+	      meta_image_frame.on('select', function() {
+	        // Grabs the attachment selection and creates a JSON representation of the model.
+	        var media_attachment = meta_image_frame
+	          .state()
+	          .get('selection')
+	          .first()
+	          .toJSON()
+	        // Sends the attachment URL to our custom image input field.
+	        meta_image.val(media_attachment.url)
+	        meta_image_preview.children('img').attr('src', media_attachment.url)
+	      })
+	      // Opens the media library frame.
+	      meta_image_frame.open()
+	    })
+	  })
+	</script>
 
 
 <?php }
@@ -291,7 +403,7 @@ add_action( 'save_post', 'save_your_fields_meta' );
 function add_your_fields_meta_box() {
 	add_meta_box(
 		'your_fields_meta_box', // $id
-		'Vos champs', // $title
+		'Veuillez remplir tous les champs suivants', // $title
 		'show_your_fields_meta_box', // $callback
 		'nous_rejoindre', // $screen
 		'normal', // $context

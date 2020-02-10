@@ -576,6 +576,11 @@ form p {
   font-weight: 400;
 }
 
+.title-offre > a {
+  color: #333;
+  text-decoration: none;  
+}
+
 .tous-nos-offre span {
   padding: 9px 25px 9px 25px;
   font-size: 1.8rem;
@@ -731,6 +736,70 @@ form p {
   color: #8344a9;
 }
 
+.mission, .profil {
+  display: flex;
+  margin-bottom: 100px;
+  margin-top: 50px;
+}
+.img-offre {
+  max-width: 100%;
+  border-radius: 25px;
+  box-shadow: 9px 12px 20px -8px rgba(0, 0, 0, 0.6);
+}
+
+.img-collab {
+  max-width: 100%;
+}
+.collab {
+  padding: 0;
+}
+.text-collab {
+  background: #eee;
+  padding: 15px;
+  font-size: 2rem;
+}
+
+.body-offre {
+  margin: auto;
+  width: 80%;
+}
+.text-offre {
+  font-size: 2rem;
+  text-align: center;
+  line-height: 34px;
+}
+
+.postuler-offre-apropos {
+  width: 100%;
+}
+
+#postuler {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+#postuler-text a {
+    background-image: linear-gradient(to right, #ff3e89, #e63a97, #c93ca1, #a840a7, #8344a9);
+    padding: 15px 55px 15px 55px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 2rem;
+}
+
+#nous-rejoindre {
+  margin-bottom: 50px;
+  display: flex;
+}
+.mission .titre, .profil .titre {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.titre-mission{
+  font-size: 3rem;
+}
+
+
 /* Mobile */
 
 @media (max-width: 500px) {
@@ -861,6 +930,12 @@ form p {
   .previous-post {
     position: absolute;
     left: -10px;
+  }
+  .mission, .profil, #nous-rejoindre {
+    flex-direction: column;
+  }
+  .text-collab {
+    height: 100% !important;
   }
 
 }
